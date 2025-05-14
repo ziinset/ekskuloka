@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'login_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -8,19 +8,51 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen>
+    with SingleTickerProviderStateMixin {
   final PageController _pageController = PageController();
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
   int _currentPage = 0;
   final int _numPages = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToHome() {
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginPage()));
+  }
 
   List<Widget> _buildPageIndicator() {
     List<Widget> indicators = [];
     for (int i = 0; i < _numPages; i++) {
       indicators.add(
-        Container(
-          width: MediaQuery.of(context).size.width * 0.4,
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width:
+              MediaQuery.of(context).size.width *
+              (i == _currentPage ? 0.4 : 0.35),
           height: 4,
-          margin: const EdgeInsets.symmetric(horizontal: 2),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             color:
@@ -41,39 +73,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Close button
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20, top: 10),
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black12),
-                  ),
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: const Icon(Icons.close, size: 16),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => const MyHomePage(title: 'Ekskuloka'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-
-            // Progress indicator
+            // Top section with close button and progress indicator
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _buildPageIndicator(),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Progress indicator
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildPageIndicator(),
+                    ),
+                  ),
+
+                  // Close button
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black12),
+                      color: Colors.white,
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.close, size: 18),
+                      color: Colors.black54,
+                      onPressed: _navigateToHome,
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -84,77 +114,95 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPageChanged: (int page) {
                   setState(() {
                     _currentPage = page;
+                    _animationController.reset();
+                    _animationController.forward();
                   });
                 },
                 children: [
-                  // First page
-                  _buildFirstPage(),
-
-                  // Second page
-                  _buildSecondPage(),
+                  _buildPage(
+                    imagePath: 'assets/images/onboarding1.png',
+                    title: 'Temukan Apa yang kamu suka',
+                    description:
+                        'Disini ada banyak sekali ekstrakurikuler yang menarik dijelajahi',
+                  ),
+                  _buildPage(
+                    imagePath: 'assets/images/onboarding2.png',
+                    title: 'Mulai Perjalananmu Disini !',
+                    description:
+                        'Bisa banget cari bakat bakat terpendam kalian di lapak ini',
+                  ),
                 ],
               ),
             ),
 
             // Bottom buttons
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               child: Row(
                 children: [
+                  // Skip button
                   Expanded(
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey[200],
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        backgroundColor: Colors.grey[100],
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        elevation: 0,
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder:
-                                (_) => const MyHomePage(title: 'Ekskuloka'),
-                          ),
-                        );
-                      },
+                      onPressed: _navigateToHome,
                       child: const Text(
                         'Skip',
-                        style: TextStyle(color: Colors.black54, fontSize: 16),
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 16),
+                  // Next/Start button
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF23B5AE),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        elevation: 0,
                       ),
                       onPressed: () {
                         if (_currentPage == _numPages - 1) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder:
-                                  (_) => const MyHomePage(title: 'Ekskuloka'),
-                            ),
-                          );
+                          _navigateToHome();
                         } else {
                           _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.ease,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
                           );
                         }
                       },
-                      child: Text(
-                        _currentPage == _numPages - 1 ? 'Mulai' : 'Next →',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _currentPage == _numPages - 1 ? 'Mulai' : 'Next',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          if (_currentPage != _numPages - 1)
+                            const Icon(
+                              Icons.arrow_forward,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                        ],
                       ),
                     ),
                   ),
@@ -167,71 +215,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildFirstPage() {
-    return Column(
-      children: [
-        const SizedBox(height: 40),
-        // Illustration
-        Expanded(
-          child: Image.asset('assets/images/onboarding1.png', height: 300),
-        ),
-        const SizedBox(height: 20),
-        // Title
-        const Text(
-          'Temukan Apa yang kamu suka',
-          style: TextStyle(
-            color: Color(0xFF23B5AE),
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+  Widget _buildPage({
+    required String imagePath,
+    required String title,
+    required String description,
+  }) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          // Illustration
+          Expanded(
+            child: Hero(
+              tag: imagePath,
+              child: Image.asset(imagePath, height: 320, fit: BoxFit.contain),
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 10),
-        // Description
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            'Disini ada banyak sekali ekstrakurikuler yang menarik dijelajahi',
-            style: TextStyle(color: Colors.black54, fontSize: 16),
+          const SizedBox(height: 30),
+          // Title
+          Text(
+            title,
+            style: const TextStyle(
+              color: Color(0xFF23B5AE),
+              fontSize: 26,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.5,
+            ),
             textAlign: TextAlign.center,
           ),
-        ),
-        const SizedBox(height: 30),
-      ],
-    );
-  }
-
-  Widget _buildSecondPage() {
-    return Column(
-      children: [
-        const SizedBox(height: 40),
-        // Illustration
-        Expanded(
-          child: Image.asset('assets/images/onboarding2.png', height: 300),
-        ),
-        const SizedBox(height: 20),
-        // Title
-        const Text(
-          'Mulai Perjalananmu Disini !',
-          style: TextStyle(
-            color: Color(0xFF23B5AE),
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+          const SizedBox(height: 16),
+          // Description
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: Text(
+              description,
+              style: const TextStyle(
+                color: Colors.black54,
+                fontSize: 16,
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 10),
-        // Description
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            'Bisa banget cari bakat bakat terpendam kalian di lapak ini',
-            style: TextStyle(color: Colors.black54, fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(height: 30),
-      ],
+          const SizedBox(height: 40),
+        ],
+      ),
     );
   }
 }
