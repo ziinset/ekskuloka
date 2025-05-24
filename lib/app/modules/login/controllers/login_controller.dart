@@ -1,42 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class LoginController extends GetxController {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginController {
+  // Method untuk handle login
+  Future<void> login(BuildContext context, String username, String password) async {
+    try {
+      // Validasi input
+      if (username.isEmpty || password.isEmpty) {
+        _showErrorDialog(context, 'Username dan password tidak boleh kosong');
+        return;
+      }
 
-  void login() {
-    // Implementasi login
-    String username = usernameController.text;
-    String password = passwordController.text;
+      // Simulasi proses login (ganti dengan logic API sebenarnya)
+      await _performLogin(username, password);
 
-    // Validasi
-    if (username.isEmpty || password.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Username dan password harus diisi',
-        backgroundColor: Colors.red.withOpacity(0.1),
-        colorText: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
+      // Jika login berhasil, navigasi ke home
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } catch (e) {
+      // Handle error
+      if (context.mounted) {
+        _showErrorDialog(context, 'Login gagal: ${e.toString()}');
+      }
     }
+  }
 
-    // Proses login
-    // Ganti dengan implementasi login sesuai kebutuhan
-    Get.snackbar(
-      'Login Berhasil',
-      'Selamat datang $username',
-      backgroundColor: Colors.green.withOpacity(0.1),
-      colorText: Colors.green,
-      snackPosition: SnackPosition.BOTTOM,
+  // Simulasi proses login - ganti dengan API call sebenarnya
+  Future<bool> _performLogin(String username, String password) async {
+    // Simulasi delay untuk loading
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Contoh validasi sederhana (ganti dengan logic sebenarnya)
+    if (username == 'admin' && password == 'admin123') {
+      return true;
+    } else if (username == 'user' && password == 'user123') {
+      return true;
+    } else {
+      throw Exception('Username atau password salah');
+    }
+  }
+
+  // Method untuk menampilkan error dialog
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  @override
-  void onClose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.onClose();
+  // Method untuk logout (bisa digunakan di halaman lain)
+  void logout(BuildContext context) {
+    // Clear any stored user data/tokens here
+
+    // Navigate back to login
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
+  // Method untuk validasi email format
+  bool isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  // Method untuk validasi password strength
+  bool isValidPassword(String password) {
+    // Minimal 6 karakter
+    return password.length >= 6;
   }
 }

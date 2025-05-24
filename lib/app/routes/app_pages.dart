@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jadwal/bindings/jadwal_binding.dart';
+import '../modules/jadwal/views/jadwal_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -27,8 +29,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => const LoginView(),
+      page: () => LoginPage(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.JADWAL,
+      page: () => const JadwalView(),
+      binding: JadwalBinding(),
     ),
   ];
 }
