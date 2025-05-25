@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../presensi/views/presensi_view.dart';
+import '../../informasi/views/informasi_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -37,7 +39,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.3),
       end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _slideController!, curve: Curves.elasticOut));
+    ).animate(
+      CurvedAnimation(parent: _slideController!, curve: Curves.elasticOut),
+    );
 
     _fadeController?.forward();
     _slideController?.forward();
@@ -63,10 +67,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFF2DB5A5),
-                    const Color(0xFF1FA396),
-                  ],
+                  colors: [const Color(0xFF2DB5A5), const Color(0xFF1FA396)],
                 ),
               ),
               child: Stack(
@@ -100,7 +101,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: FadeTransition(
-                      opacity: _fadeAnimation ?? const AlwaysStoppedAnimation(1.0),
+                      opacity:
+                          _fadeAnimation ?? const AlwaysStoppedAnimation(1.0),
                       child: Column(
                         children: [
                           // Status bar
@@ -118,22 +120,30 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               Row(
                                 children: [
                                   // Enhanced signal bars
-                                  ...List.generate(4, (index) => Container(
-                                    width: 3,
-                                    height: 8 + (index * 2),
-                                    margin: const EdgeInsets.only(right: 2),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.9),
-                                      borderRadius: BorderRadius.circular(1.5),
+                                  ...List.generate(
+                                    4,
+                                    (index) => Container(
+                                      width: 3,
+                                      height: 8 + (index * 2),
+                                      margin: const EdgeInsets.only(right: 2),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.9),
+                                        borderRadius: BorderRadius.circular(
+                                          1.5,
+                                        ),
+                                      ),
                                     ),
-                                  )),
+                                  ),
                                   const SizedBox(width: 8),
                                   // Enhanced battery icon
                                   Container(
                                     width: 24,
                                     height: 12,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.white, width: 1.5),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1.5,
+                                      ),
                                       borderRadius: BorderRadius.circular(3),
                                     ),
                                     child: Container(
@@ -161,7 +171,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: LinearGradient(
-                                    colors: [Colors.white, Colors.white.withOpacity(0.8)],
+                                    colors: [
+                                      Colors.white,
+                                      Colors.white.withOpacity(0.8),
+                                    ],
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -180,13 +193,21 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     child: Image.asset(
                                       'assets/images/profile_avatar.png',
                                       fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
                                         return Container(
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                               colors: [
-                                                const Color(0xFF2DB5A5).withOpacity(0.1),
-                                                const Color(0xFF2DB5A5).withOpacity(0.2),
+                                                const Color(
+                                                  0xFF2DB5A5,
+                                                ).withOpacity(0.1),
+                                                const Color(
+                                                  0xFF2DB5A5,
+                                                ).withOpacity(0.2),
                                               ],
                                             ),
                                           ),
@@ -229,7 +250,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               // Enhanced Notification and Settings with hover effects
                               Row(
                                 children: [
-                                  _buildHeaderButton(Icons.notifications_outlined),
+                                  _buildHeaderButton(
+                                    Icons.notifications_outlined,
+                                  ),
                                   const SizedBox(width: 10),
                                   _buildHeaderButton(Icons.settings_outlined),
                                 ],
@@ -255,7 +278,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                   ),
                 ),
                 child: SlideTransition(
-                  position: _slideAnimation ?? const AlwaysStoppedAnimation(Offset.zero),
+                  position:
+                      _slideAnimation ??
+                      const AlwaysStoppedAnimation(Offset.zero),
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
                     child: Column(
@@ -274,7 +299,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFF2DB5A5).withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(15),
@@ -300,10 +328,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [
-                                Colors.grey[50]!,
-                                Colors.grey[100]!,
-                              ],
+                              colors: [Colors.grey[50]!, Colors.grey[100]!],
                             ),
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
@@ -318,17 +343,29 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               GestureDetector(
-                                onTap: () => Navigator.pushNamed(context, '/jadwal'),
+                                onTap:
+                                    () =>
+                                        Navigator.pushNamed(context, '/jadwal'),
                                 child: _buildEnhancedActivityItem(
                                   icon: Icons.calendar_today,
                                   label: 'Jadwal',
                                   color: const Color(0xFF2DB5A5),
                                 ),
                               ),
-                              _buildEnhancedActivityItem(
-                                icon: Icons.badge_outlined,
-                                label: 'Presensi',
-                                color: const Color(0xFF2DB5A5),
+                              GestureDetector(
+                                onTap:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => const PresensiView(),
+                                      ),
+                                    ),
+                                child: _buildEnhancedActivityItem(
+                                  icon: Icons.badge_outlined,
+                                  label: 'Presensi',
+                                  color: const Color(0xFF2DB5A5),
+                                ),
                               ),
                               _buildEnhancedActivityItem(
                                 icon: Icons.assignment_outlined,
@@ -406,12 +443,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     gradient: const LinearGradient(
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
-                                      colors: [Color(0xFF2DB5A5), Color(0xFF1FA396)],
+                                      colors: [
+                                        Color(0xFF2DB5A5),
+                                        Color(0xFF1FA396),
+                                      ],
                                     ),
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: const Color(0xFF2DB5A5).withOpacity(0.3),
+                                        color: const Color(
+                                          0xFF2DB5A5,
+                                        ).withOpacity(0.3),
                                         blurRadius: 10,
                                         offset: const Offset(0, 4),
                                       ),
@@ -434,7 +476,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 // Enhanced Schedule Info
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Rabu',
@@ -448,10 +491,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                       Row(
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFF2DB5A5).withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(6),
+                                              color: const Color(
+                                                0xFF2DB5A5,
+                                              ).withOpacity(0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
                                             ),
                                             child: const Text(
                                               '14:45',
@@ -470,10 +519,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                           ),
                                           const SizedBox(width: 8),
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
                                             decoration: BoxDecoration(
-                                              color: Colors.orange.withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(6),
+                                              color: Colors.orange.withOpacity(
+                                                0.1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
                                             ),
                                             child: const Text(
                                               '17:10',
@@ -531,7 +586,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
-                                      colors: [Colors.yellow[100]!, Colors.orange[50]!],
+                                      colors: [
+                                        Colors.yellow[100]!,
+                                        Colors.orange[50]!,
+                                      ],
                                     ),
                                     shape: BoxShape.circle,
                                   ),
@@ -557,36 +615,46 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         const SizedBox(height: 35),
 
                         // Enhanced Informasi Section
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 4,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(2),
-                                  ),
+                        // Di bagian "Informasi untuk kamu" section, ganti GestureDetector dengan:
+                        GestureDetector(
+                          onTap:
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const InformasiView(),
                                 ),
-                                const SizedBox(width: 12),
-                                const Text(
-                                  'Informasi untuk kamu',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black87,
+                              ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 4,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.grey,
-                              size: 16,
-                            ),
-                          ],
+                                  const SizedBox(width: 12),
+                                  const Text(
+                                    'Informasi untuk kamu',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.grey,
+                                size: 16,
+                              ),
+                            ],
+                          ),
                         ),
 
                         const SizedBox(height: 20),
@@ -616,7 +684,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     topRight: Radius.circular(18),
                                   ),
                                   gradient: LinearGradient(
-                                    colors: [Colors.grey[200]!, Colors.grey[100]!],
+                                    colors: [
+                                      Colors.grey[200]!,
+                                      Colors.grey[100]!,
+                                    ],
                                   ),
                                 ),
                                 child: Stack(
@@ -631,11 +702,18 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         width: double.infinity,
                                         height: double.infinity,
                                         fit: BoxFit.cover,
-                                        errorBuilder: (context, error, stackTrace) {
+                                        errorBuilder: (
+                                          context,
+                                          error,
+                                          stackTrace,
+                                        ) {
                                           return Container(
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
-                                                colors: [Colors.grey[200]!, Colors.grey[100]!],
+                                                colors: [
+                                                  Colors.grey[200]!,
+                                                  Colors.grey[100]!,
+                                                ],
                                               ),
                                             ),
                                             child: const Center(
@@ -700,10 +778,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     Row(
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 5,
+                                          ),
                                           decoration: BoxDecoration(
                                             color: Colors.blue.withOpacity(0.1),
-                                            borderRadius: BorderRadius.circular(12),
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
                                           ),
                                           child: const Text(
                                             'Berita Terbaru',
@@ -767,28 +850,37 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               onTap: () => setState(() => _selectedIndex = 1),
             ),
             // Enhanced Center QR Scanner Button
-            Container(
-              width: 65,
-              height: 65,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF2DB5A5), Color(0xFF1FA396)],
-                ),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF2DB5A5).withOpacity(0.4),
-                    blurRadius: 15,
-                    offset: const Offset(0, 5),
+            GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PresensiView(),
+                    ),
                   ),
-                ],
-              ),
-              child: const Icon(
-                Icons.qr_code_scanner,
-                color: Colors.white,
-                size: 32,
+              child: Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF2DB5A5), Color(0xFF1FA396)],
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF2DB5A5).withOpacity(0.4),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.qr_code_scanner,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
             ),
             _buildNavItem(
@@ -832,16 +924,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.15),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 20,
-      ),
+      child: Icon(icon, color: Colors.white, size: 20),
     );
   }
 
@@ -870,11 +955,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               ),
             ],
           ),
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 26,
-          ),
+          child: Icon(icon, color: Colors.white, size: 26),
         ),
         const SizedBox(height: 10),
         Text(
@@ -905,7 +986,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: isActive ? const Color(0xFF2DB5A5).withOpacity(0.1) : Colors.transparent,
+              color:
+                  isActive
+                      ? const Color(0xFF2DB5A5).withOpacity(0.1)
+                      : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
