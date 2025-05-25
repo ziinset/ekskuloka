@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class LoginController {
   // Method untuk handle login
-  Future<void> login(BuildContext context, String username, String password) async {
+  Future<void> login(
+    BuildContext context,
+    String username,
+    String password,
+  ) async {
     try {
       // Validasi input
       if (username.isEmpty || password.isEmpty) {
@@ -33,7 +37,7 @@ class LoginController {
     // Contoh validasi sederhana (ganti dengan logic sebenarnya)
     if (username == 'admin' && password == 'admin123') {
       return true;
-    } else if (username == 'user' && password == 'user123') {
+    } else if (username == 'Goldi' && password == '12345') {
       return true;
     } else {
       throw Exception('Username atau password salah');
