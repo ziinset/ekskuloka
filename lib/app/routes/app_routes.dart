@@ -9,6 +9,12 @@ abstract class Routes {
   static const JADWAL = _Paths.JADWAL;
   static const PRESENSI = _Paths.PRESENSI;
   static const INFORMASI = _Paths.INFORMASI;
+  static const PENDAFTARAN_EKSKUL = _Paths.PENDAFTARAN_EKSKUL;
+  static const AKUN = _Paths.AKUN;
+  static const PROFILE = _Paths.PROFILE;
+  static const NOTIFIKASI = _Paths.NOTIFIKASI;
+  static const KOMUNITAS = _Paths.KOMUNITAS;
+  static const CHAT = _Paths.CHAT;
 }
 
 abstract class _Paths {
@@ -19,4 +25,10 @@ abstract class _Paths {
   static const JADWAL = '/jadwal';
   static const PRESENSI = '/presensi';
   static const INFORMASI = '/informasi';
+  static const PENDAFTARAN_EKSKUL = '/pendaftaran-ekskul';
+  static const AKUN = '/akun';
+  static const PROFILE = '/profile';
+  static const NOTIFIKASI = '/notifikasi';
+  static const KOMUNITAS = '/komunitas';
+  static const CHAT = '/chat';
 }

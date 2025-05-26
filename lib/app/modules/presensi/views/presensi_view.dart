@@ -164,6 +164,36 @@ class _PresensiViewState extends State<PresensiView>
     );
   }
 
+  // Navigation handlers
+  void _navigateToHome() {
+    Navigator.of(context).pop(); // Go back to home
+  }
+
+  void _navigateToKomunitas() {
+    // Navigate to Komunitas page
+    Navigator.pushNamed(context, '/komunitas');
+    // Alternative jika menggunakan direct navigation:
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const KomunitasView()),
+    // );
+  }
+
+  void _navigateToJadwal() {
+    // Navigate to Jadwal page
+    Navigator.pushNamed(context, '/jadwal');
+  }
+
+  void _navigateToAkun() {
+    // Navigate to Akun page
+    Navigator.pushNamed(context, '/akun');
+    // Alternative jika menggunakan direct navigation:
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const AkunView()),
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -254,7 +284,7 @@ class _PresensiViewState extends State<PresensiView>
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
 
                       // Instructions with flash status
                       Column(
@@ -305,7 +335,7 @@ class _PresensiViewState extends State<PresensiView>
                       // QR Scanner Area
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal:5),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(20),
@@ -534,14 +564,14 @@ class _PresensiViewState extends State<PresensiView>
         ),
       ),
 
-      // Bottom Navigation Bar (sama seperti HomeView)
+      // Bottom Navigation Bar with full functionality
       bottomNavigationBar: Container(
         height: 85,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
           ),
           boxShadow: [
             BoxShadow(
@@ -558,13 +588,13 @@ class _PresensiViewState extends State<PresensiView>
               icon: Icons.home,
               label: 'Home',
               isActive: false,
-              onTap: () => Navigator.of(context).pop(),
+              onTap: _navigateToHome,
             ),
             _buildNavItem(
               icon: Icons.groups_outlined,
               label: 'Komunitas',
               isActive: false,
-              onTap: () {},
+              onTap: _navigateToKomunitas,
             ),
             // Center QR Scanner Button (Active)
             Container(
@@ -595,13 +625,13 @@ class _PresensiViewState extends State<PresensiView>
               icon: Icons.calendar_today_outlined,
               label: 'Jadwal',
               isActive: false,
-              onTap: () {},
+              onTap: _navigateToJadwal,
             ),
             _buildNavItem(
               icon: Icons.person_outline,
               label: 'Akun',
               isActive: false,
-              onTap: () {},
+              onTap: _navigateToAkun,
             ),
           ],
         ),

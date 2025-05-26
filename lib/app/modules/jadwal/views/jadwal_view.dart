@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../../komunitas/views/komunitas_view.dart';
+import '../../presensi/views/presensi_view.dart';
+import '../../akun/views/akun_view.dart';
 class JadwalView extends StatefulWidget {
   const JadwalView({Key? key}) : super(key: key);
 
@@ -235,8 +237,8 @@ class _JadwalViewState extends State<JadwalView> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
           ),
           boxShadow: [
             BoxShadow(
@@ -262,20 +264,47 @@ class _JadwalViewState extends State<JadwalView> {
               icon: Icons.groups_outlined,
               label: 'Komunitas',
               isActive: _selectedIndex == 1,
-              onTap: () => setState(() => _selectedIndex = 1),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const KomunitasView(),
+                  ),
+                );
+              },
             ),
             // Center QR Scanner Button
-            Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                color: Color(0xFF2DB5A5),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.qr_code_scanner,
-                color: Colors.white,
-                size: 30,
+            GestureDetector(
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PresensiView(),
+                    ),
+                  ),
+              child: Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF2DB5A5), Color(0xFF1FA396)],
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF2DB5A5).withOpacity(0.4),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.qr_code_scanner,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
             ),
             _buildNavItem(
@@ -288,7 +317,12 @@ class _JadwalViewState extends State<JadwalView> {
               icon: Icons.person_outline,
               label: 'Akun',
               isActive: _selectedIndex == 3,
-              onTap: () => setState(() => _selectedIndex = 3),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AkunView()),
+                );
+              },
             ),
           ],
         ),

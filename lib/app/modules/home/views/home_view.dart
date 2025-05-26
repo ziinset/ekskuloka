@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../presensi/views/presensi_view.dart';
 import '../../informasi/views/informasi_view.dart';
+import '../../pendaftaran_ekskul/views/pendaftaran_ekskul_view.dart';
+import '../../akun/views/akun_view.dart';
+import '../../komunitas/views/komunitas_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -231,7 +234,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text(
-                                      'Albert Einstein',
+                                      'Goldi Bangun Amukti',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 22,
@@ -240,9 +243,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     const SizedBox(height: 6),
-                                    _buildInfoRow('NISN: 010101010'),
+                                    _buildInfoRow('NISN: 0088938829'),
                                     _buildInfoRow('Status: Pelajar Gokil'),
-                                    _buildInfoRow('Aktif Sejak: 20 Mei 345'),
+                                    _buildInfoRow('Aktif Sejak: 20 Juli 2021'),
                                   ],
                                 ),
                               ),
@@ -253,8 +256,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   _buildHeaderButton(
                                     Icons.notifications_outlined,
                                   ),
-                                  const SizedBox(width: 10),
-                                  _buildHeaderButton(Icons.settings_outlined),
                                 ],
                               ),
                             ],
@@ -318,9 +319,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-
                         const SizedBox(height: 20),
-
                         // Enhanced Activity Menu with better shadows and animations
                         Container(
                           padding: const EdgeInsets.all(25),
@@ -348,7 +347,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         Navigator.pushNamed(context, '/jadwal'),
                                 child: _buildEnhancedActivityItem(
                                   icon: Icons.calendar_today,
-                                  label: 'Jadwal',
+                                  label: 'Jadwal\n',
                                   color: const Color(0xFF2DB5A5),
                                 ),
                               ),
@@ -363,26 +362,46 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     ),
                                 child: _buildEnhancedActivityItem(
                                   icon: Icons.badge_outlined,
-                                  label: 'Presensi',
+                                  label: 'Presensi\n',
                                   color: const Color(0xFF2DB5A5),
                                 ),
                               ),
-                              _buildEnhancedActivityItem(
-                                icon: Icons.assignment_outlined,
-                                label: 'Pendaftaran\nEkskul',
-                                color: const Color(0xFF2DB5A5),
+                              GestureDetector(
+                                onTap:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                const PendaftaranEkskulView(),
+                                      ),
+                                    ),
+                                child: _buildEnhancedActivityItem(
+                                  icon: Icons.assignment_outlined,
+                                  label: 'Pendaftaran\nEkskul',
+                                  color: const Color(0xFF2DB5A5),
+                                ),
                               ),
-                              _buildEnhancedActivityItem(
-                                icon: Icons.groups_outlined,
-                                label: 'Komunitas',
-                                color: const Color(0xFF2DB5A5),
+                              GestureDetector(
+                                onTap:
+                                    () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => const KomunitasView(),
+                                      ),
+                                    ),
+                                child: _buildEnhancedActivityItem(
+                                  icon: Icons.groups_outlined,
+                                  label: 'Komunitas\n',
+                                  color: const Color(0xFF2DB5A5),
+                                ),
                               ),
                             ],
                           ),
                         ),
 
                         const SizedBox(height: 35),
-
                         // Enhanced Jadwal Ekstrakurikuler section
                         Row(
                           children: [
@@ -407,7 +426,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         ),
 
                         const SizedBox(height: 20),
-
                         // Enhanced Schedule Card
                         GestureDetector(
                           onTap: () => Navigator.pushNamed(context, '/jadwal'),
@@ -472,7 +490,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 ),
 
                                 const SizedBox(width: 18),
-
                                 // Enhanced Schedule Info
                                 Expanded(
                                   child: Column(
@@ -633,7 +650,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     width: 4,
                                     height: 24,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: const Color(0xFF2DB5A5),
                                       borderRadius: BorderRadius.circular(2),
                                     ),
                                   ),
@@ -656,9 +673,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
-
                         const SizedBox(height: 20),
-
                         // Enhanced News Card
                         Container(
                           decoration: BoxDecoration(
@@ -823,8 +838,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
           ),
           boxShadow: [
             BoxShadow(
@@ -847,7 +862,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               icon: Icons.groups_outlined,
               label: 'Komunitas',
               isActive: _selectedIndex == 1,
-              onTap: () => setState(() => _selectedIndex = 1),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const KomunitasView(),
+                  ),
+                );
+              },
             ),
             // Enhanced Center QR Scanner Button
             GestureDetector(
@@ -896,7 +918,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               icon: Icons.person_outline,
               label: 'Akun',
               isActive: _selectedIndex == 3,
-              onTap: () => setState(() => _selectedIndex = 3),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AkunView()),
+                );
+              },
             ),
           ],
         ),
